@@ -110,9 +110,9 @@
 (defun persona-face-or-unmask (face-or-persona)
   "Unmask FACE-OR-PERSONA if it is not already a face.
 Use `intern' to create a canonical symbol."
-  (if (facep face-or-persona)
-      face-or-persona
-    (persona-unmask face-or-persona #'intern)))
+  (cl-typecase face-or-persona
+    ((or symbol face) face-or-persona)
+    ((list-of symbol) (persona-unmask face-or-persona #'intern))))
 
 (defun persona-unmask (persona &optional whenface unlessface)
   "Unmask PERSONA, returning an actual face name.
