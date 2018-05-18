@@ -1,0 +1,20 @@
+2018-05-18  Lord Yuuma  <lordyuuma@gmail.com>
+
+	* persona-tests.el: Tests for version 0.1
+	(persona-unmask-font-lock-test): Added.
+	(persona-unmask-unknown-face-test): Added.
+	(persona-attributes-to-face-test): Added.
+	(persona-declare-face-test): Added.
+	(personae-unmask-and-declare-test): Added.
+
+	* persona.el: Initial definitions.
+	(persona-attribute-overrides): Override :inherit.
+	(persona-attributes): Added in reflection of face attributes.
+	(persona): Added as widget and cl-deftype.
+	(personae): Added as widget and cl-deftype.
+	(persona-face-or-unmask): Added.
+	(persona-attributes-to-face): Added.
+	(persona-declare-face): Added.
+	(personae-infer-documentation-function): Added.
+	(personae-infer-group-function): Added.
+	(personae-unmask-and-declare): Added.
