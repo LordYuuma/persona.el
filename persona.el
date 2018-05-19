@@ -176,12 +176,12 @@ all cases.")
 Optional parameter GROUP is a group to which PERSONAE belong."
   (cl-check-type personae personae)
   (dolist (item personae)
-    (let ((persona
-           (if (listp (car item))
-               (copy-sequence (car item))
-             (list (car item)))))
-      (when group
-        (push group persona))
+    (let* ((group (if (listp group) group (list group)))
+           (persona
+            (append group
+                   (if (listp (car item))
+                       (car item)
+                     (list (car item))))))
       (cl-typecase (cdr item)
         (persona
          (persona-declare-face
@@ -191,11 +191,11 @@ Optional parameter GROUP is a group to which PERSONAE belong."
                    persona)
           :group
           (funcall personae-infer-group-function
-                   group)))
+                   (intern (mapconcat #'symbol-name group "-")))))
         (personae
          (personae-unmask-and-declare
           (cdr item)
-          (intern (mapconcat #'symbol-name persona "-"))))))))
+          persona))))))
 
 (provide 'persona)
 
