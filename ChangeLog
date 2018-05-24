@@ -1,3 +1,12 @@
+2018-05-24  Lord Yuuma  <lordyuuma@gmail.com>
+
+	* persona.el (personae-edit-at-point): Added.
+
+2018-05-19  Lord Yuuma  <lordyuuma@gmail.com>
+
+	* persona.el (personae-unmask-and-declare): Made group a list to
+	keep consistensy with nested groups and the like
+
 2018-05-18  Lord Yuuma  <lordyuuma@gmail.com>
 
 	* persona-tests.el: Tests for version 0.1

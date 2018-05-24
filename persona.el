@@ -55,6 +55,13 @@
 (require 'cus-edit)
 (require 'cl-lib)
 (require 'eieio) ;; list-of
+(require 'widget)
+
+;; TODO: Compilation currently seems to break the persona deftype
+;; This snippet therefore doesn't amount to much, but it's taken from
+;; the widget programming example, so it must have some meaning, right?
+(eval-when-compile
+  (require 'wid-edit))
 
 (defconst persona-attribute-overrides
   '((:inherit
@@ -196,6 +203,46 @@ Optional parameter GROUP is a group to which PERSONAE belong."
          (personae-unmask-and-declare
           (cdr item)
           persona))))))
+
+(defun personae-edit-at-point ()
+  "Create a new buffer to edit the personae at point."
+  (interactive)
+  (save-excursion
+    (let ((buffer (current-buffer))
+          (p1 (point))
+          (value (read (current-buffer)))
+          (p2 (point)))
+      (cl-check-type value personae)
+      (switch-to-buffer-other-window
+       (generate-new-buffer "*personae*"))
+      (kill-all-local-variables)
+      (remove-overlays)
+      ;; save the original buffer and region locally to refer to it
+      ;; within the widgets
+      (setq-local orig-buffer buffer)
+      (setq-local orig-buffer-region (list p1 p2))
+      ;; save the personae-widget locally
+      (setq-local widget (widget-create 'personae value))
+      (widget-insert "\n\n")
+      (widget-create 'push-button
+                     :notify
+                     (lambda (&rest ignore)
+                       (kill-buffer))
+                     "Cancel")
+      (widget-create 'push-button
+                     :notify
+                     (lambda (&rest ignore)
+                       (let ((region orig-buffer-region)
+                             (value (widget-value widget)))
+                        (with-current-buffer orig-buffer
+                          (apply #'delete-region region)
+                          (pp
+                           value
+                           (current-buffer)))
+                        (kill-buffer)))
+                     "Apply")
+      (use-local-map widget-keymap)
+      (widget-setup))))
 
 (provide 'persona)
 
