@@ -1,5 +1,7 @@
 #+TITLE: persona.el
 #+AUTHOR: LordYuuma
+#+MACRO current-version 0.2
+This README is up-to-date with version {{{current-version}}}.
 
 * Installation
   ~git clone~ this library or just download ~persona.el~ and put it
@@ -7,33 +9,69 @@
 
 * Widgets
 ** persona
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Mimics the look and feel of the custom face widget, without
    attaching it to a face.
    To work together with ~personae~, faces in ~:inherit~ may also
    be symbol lists.
 ** personae
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Groups multiple ~persona~ widgets together, with potential recursion.
 * Functions
 ** persona-face-or-unmask ~(face-or-persona)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Takes a single face, symbol or list of symbols as argument and
    returns a symbol, which may be a face (or ~nil~), if the argument is
    of a wrong type).
 ** persona-attributes-to-face ~(attributes)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Takes a list of persona attributes (the persona equivalent to face
    attributes) and maps them to face attributes. Instead of calling this
    function directly, you are likely looking for ~persona-declare-face~
    or ~persona-unmask-and-declare~.
 ** persona-declare-face ~(symbol persona doc &rest args)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Simple wrapper around ~custom-declare-face~ transforming persona
    attributes to face attributes.
 ** personae-unmask-and-declare ~(personae)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Recursively applies ~persona-declare-face~, using
    ~personae-infer-documentation-function~ to infer documentation and
    ~personae-infer-group-function~ to infer group tags.
+** personae-new-at-point ~()~
+   :PROPERTIES:
+   :added: 0.2
+   :END:
+   Creates a new buffer with a new ~personae~ widget for editing.
+   On "Apply", said buffer will be killed and the value inserted at point in the buffer from which it was called.
+** personae-edit-at-point ~()~
+   :PROPERTIES:
+   :added: 0.2
+   :END:
+   Reads the ~personae~ widget at point and creates a new buffer for editing.
+   On "Apply", said buffer will be killed and the value und the buffer updated.
 * Variables
 ** personae-infer-documentation-function ~(lambda (symbols) some-doc)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Can be used in ~persona-unmask-and-declare~ to override the default
    documentation of a declared face.
 ** personae-infer-group-function ~(lambda (symbol) some-group)~
+   :PROPERTIES:
+   :added: 0.1
+   :END:
    Can be used in ~persona-unmask-and-declare~ to override the default
    group of a declared face.

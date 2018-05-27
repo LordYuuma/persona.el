@@ -1,3 +1,7 @@
+2018-05-27  Lord Yuuma  <lordyuuma@gmail.com>
+
+	* persona.el (personae-new-at-point): Added.
+
 2018-05-24  Lord Yuuma  <lordyuuma@gmail.com>
 
 	* persona.el (personae-edit-at-point): Added.
