@@ -1,7 +1,6 @@
 #+TITLE: persona.el
 #+AUTHOR: LordYuuma
-#+MACRO: current-version 0.2
-This README is up-to-date with version {{{current-version}}}.
+This README is up-to-date with version 0.2.
 
 * Installation
   ~git clone~ this library or just download ~persona.el~ and put it
