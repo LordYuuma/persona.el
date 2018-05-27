@@ -1,6 +1,6 @@
 #+TITLE: persona.el
 #+AUTHOR: LordYuuma
-#+MACRO current-version 0.2
+#+MACRO: current-version 0.2
 This README is up-to-date with version {{{current-version}}}.
 
 * Installation
