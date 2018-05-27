@@ -31,6 +31,7 @@
 ;;
 ;;; Change Log:
 ;;
+;; 0.2: added editing functionality
 ;; 0.1: initial version
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -203,6 +204,37 @@ Optional parameter GROUP is a group to which PERSONAE belong."
          (personae-unmask-and-declare
           (cdr item)
           persona))))))
+
+(defun personae-new-at-point ()
+  "Create a new buffer to insert new personae at point."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (switch-to-buffer-other-window
+     (generate-new-buffer "*personae*"))
+    (kill-all-local-variables)
+    (remove-overlays)
+    ;; save the original buffer
+    (setq-local orig-buffer buffer)
+    ;; save the personae widget locally
+    (setq-local widget (widget-create 'personae))
+    (widget-insert "\n\n")
+    (widget-create 'push-button
+                   :notify
+                   (lambda (&rest ignore)
+                     (kill-buffer))
+                   "Cancel")
+    (widget-create 'push-button
+                   :notify
+                   (lambda (&rest ignore)
+                     (let ((value (widget-value widget)))
+                       (with-current-buffer orig-buffer
+                         (pp
+                          value
+                          (current-buffer)))
+                       (kill-buffer)))
+                   "Apply")
+    (use-local-map widget-keymap)
+    (widget-setup)))
 
 (defun personae-edit-at-point ()
   "Create a new buffer to edit the personae at point."
